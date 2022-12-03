@@ -1,11 +1,13 @@
 const FILE_DATA: &str = include_str!("../inputs/day_two/part_one.txt");
 const FILE_TEST_DATA: &str = include_str!("../inputs/day_two/part_one_test.txt");
 
+#[derive(PartialEq, Clone, Copy)]
 enum Choice {
     Rock,
     Paper,
     Scisor,
 }
+
 
 fn get_outcome_points(oponent: &Choice, myself: &Choice) -> u32 {
     match (oponent, myself) {
@@ -14,9 +16,7 @@ fn get_outcome_points(oponent: &Choice, myself: &Choice) -> u32 {
         (Choice::Scisor, Choice::Rock) => 6,
         (Choice::Paper, Choice::Scisor) => 6,
         // draw
-        (Choice::Paper, Choice::Paper) => 3,
-        (Choice::Rock, Choice::Rock) => 3,
-        (Choice::Scisor, Choice::Scisor) => 3,
+        (op_choice, my_choice) if op_choice == my_choice => 3,
         // I have lost
         _ => 0,
     }
@@ -100,9 +100,7 @@ fn get_my_choice(outcome: &Outcome, opponent: &Choice) -> Choice {
         (Outcome::Win, Choice::Paper) => Choice::Scisor,
         (Outcome::Win, Choice::Scisor) => Choice::Rock,
 
-        (Outcome::Draw, Choice::Rock) => Choice::Rock,
-        (Outcome::Draw, Choice::Paper) => Choice::Paper,
-        (Outcome::Draw, Choice::Scisor) => Choice::Scisor,
+        (Outcome::Draw, opponent) => *opponent,
 
         (Outcome::Lose, Choice::Rock) => Choice::Scisor,
         (Outcome::Lose, Choice::Paper) => Choice::Rock,
