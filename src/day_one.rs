@@ -20,8 +20,11 @@ pub fn part_one(file_path: Option<&str>) -> u32 {
     let mut max: u32 = 0;
     let mut tmp: u32 = 0;
 
+    let non: Option<i32> = None;
+    let som = Some(1);
+
     let input = file_path
-        .map(move |str| fs::read_to_string(str).unwrap())
+        .map(|path| fs::read_to_string(path).unwrap())
         .unwrap_or(String::from(ELF_LIST));
 
     for line in input.lines() {
